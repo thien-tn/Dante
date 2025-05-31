@@ -4,7 +4,7 @@
 # Tác giả: ThienTranJP
 
 [Unit]
-Description=Dante Socks Proxy v1.4.3
+Description=Dante Socks Proxy v1.4.4
 After=network.target
 
 [Service]
