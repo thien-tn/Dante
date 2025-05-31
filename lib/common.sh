@@ -102,6 +102,44 @@ is_valid_number() {
     fi
 }
 
+# Hàm kiểm tra cổng hợp lệ
+# $1: Cổng cần kiểm tra
+is_valid_port() {
+    local port=$1
+    
+    # Kiểm tra cổng có phải là số nguyên dương và nằm trong khoảng hợp lệ (1-65535)
+    if [[ "$port" =~ ^[0-9]+$ ]] && [ "$port" -ge 1 ] && [ "$port" -le 65535 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Hàm kiểm tra cổng đã được sử dụng chưa
+# $1: Cổng cần kiểm tra
+is_port_in_use() {
+    local port=$1
+    
+    # Kiểm tra cổng có đang được sử dụng không
+    if command -v ss >/dev/null 2>&1; then
+        # Sử dụng ss nếu có
+        if ss -tuln | grep -q ":$port "; then
+            return 0
+        fi
+    elif command -v netstat >/dev/null 2>&1; then
+        # Sử dụng netstat nếu không có ss
+        if netstat -tuln | grep -q ":$port "; then
+            return 0
+        fi
+    else
+        # Nếu không có công cụ nào, giả định cổng không được sử dụng
+        warning_message "Không thể kiểm tra cổng đã được sử dụng chưa. Giả định cổng không được sử dụng."
+        return 1
+    fi
+    
+    return 1
+}
+
 # Hàm kiểm tra và mở cổng trong tường lửa
 # $1: Số cổng cần mở
 open_firewall_port() {

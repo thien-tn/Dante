@@ -33,8 +33,8 @@ Script gốc được phát triển bởi akmaslov-dev và được chỉnh sử
 
 1. Tải về repository:
    ```bash
-   git clone https://github.com/thien-tn/Dante.git
-   cd Dante
+   git clone https://github.com/yourusername/ProxyDante.git
+   cd ProxyDante
    ```
 
 2. Cấp quyền thực thi cho các file script:
